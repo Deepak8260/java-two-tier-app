@@ -21,71 +21,6 @@ project-root/
     └── README.md
 ```
 
-## Setup on a fresh Windows machine
-
-### 1. Install Java 21
-
-1. Download Java 21 JDK from the official OpenJDK, Oracle, or Eclipse Temurin website.
-2. Install Java and note the install folder, such as `C:\Program Files\Java\jdk-21`.
-3. Set the `JAVA_HOME` environment variable to the JDK install folder.
-4. Add `%JAVA_HOME%\bin` to your `Path` environment variable.
-5. Restart PowerShell after editing environment variables.
-6. Verify installation in PowerShell:
-   ```powershell
-   java --version
-   ```
-   You should see a Java 21 version.
-
-If you see `java : The term 'java' is not recognized...`, Java is not on your PATH yet.
-
-### Windows checklist for Java setup
-
-- Install Java 21 JDK and note the installation folder, for example:
-  - `C:\Program Files\Java\jdk-21`
-- Open the Start menu and search for "Environment Variables".
-- Choose "Edit the system environment variables".
-- Click "Environment Variables...".
-- Under "User variables for <your-user>", click "New..." and add:
-  - Variable name: `JAVA_HOME`
-  - Variable value: `C:\Program Files\Java\jdk-21`
-- Select the `Path` variable, click "Edit...", and add a new entry:
-  - `%JAVA_HOME%\bin`
-- Save changes, close PowerShell, and open a new PowerShell window.
-- Verify with:
-  ```powershell
-  java --version
-  ```
-
-Example command-line approach for the current user:
-
-```powershell
-setx JAVA_HOME "C:\Program Files\Java\jdk-21"
-setx PATH "%PATH%;%JAVA_HOME%\bin"
-```
-
-Then close and reopen PowerShell and run:
-
-```powershell
-java --version
-```
-
-### 2. Install Maven
-
-1. Download Maven from https://maven.apache.org/download.cgi.
-2. Extract Maven to a folder such as `C:\Program Files\Apache\maven`.
-3. Add the Maven `bin` folder to your `Path`, for example:
-   ```text
-   C:\Program Files\Apache\maven\bin
-   ```
-4. Verify in PowerShell:
-   ```powershell
-   mvn -version
-   ```
-
-### 3. Optional: Install Visual Studio Code
-
-VS Code is useful for editing and running the project, but not required.
-
 ## Setup on AWS Ubuntu EC2
 
 If you want to run this application on an AWS Ubuntu EC2 instance, follow these steps.
@@ -183,30 +118,8 @@ nohup java -jar target/employee-directory-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
    sudo rm -rf /var/www/html/*
    sudo cp -r ../frontend/* /var/www/html/
    ```
-2. Update `/etc/nginx/sites-available/default` with a config similar to:
-   ```nginx
-   server {
-       listen 80;
-       server_name _;
 
-       root /var/www/html;
-       index index.html;
-
-       location / {
-           try_files $uri $uri/ /index.html;
-       }
-
-       location /api/ {
-           proxy_pass http://localhost:8080;
-           proxy_http_version 1.1;
-           proxy_set_header Upgrade $http_upgrade;
-           proxy_set_header Connection keep-alive;
-           proxy_set_header Host $host;
-           proxy_cache_bypass $http_upgrade;
-       }
-   }
-   ```
-3. Test and reload Nginx:
+2. Test and reload Nginx:
    ```bash
    sudo nginx -t
    sudo systemctl reload nginx
@@ -238,6 +151,111 @@ The frontend should make requests to `http://<EC2_PUBLIC_IP>:8080/api/employees`
 - Keep the EC2 key pair secure.
 - Restrict inbound rules to your IP where possible.
 - Use a firewall or security group settings to limit traffic.
+
+## Setup on a fresh Windows machine
+
+### 1. Install Java 21
+
+1. Download Java 21 JDK from the official OpenJDK, Oracle, or Eclipse Temurin website.
+2. Install Java and note the install folder, such as `C:\Program Files\Java\jdk-21`.
+3. Set the `JAVA_HOME` environment variable to the JDK install folder.
+4. Add `%JAVA_HOME%\bin` to your `Path` environment variable.
+5. Restart PowerShell after editing environment variables.
+6. Verify installation in PowerShell:
+   ```powershell
+   java --version
+   ```
+   You should see a Java 21 version.
+
+If you see `java : The term 'java' is not recognized...`, Java is not on your PATH yet.
+
+### Windows checklist for Java setup
+
+- Install Java 21 JDK and note the installation folder, for example:
+  - `C:\Program Files\Java\jdk-21`
+- Open the Start menu and search for "Environment Variables".
+- Choose "Edit the system environment variables".
+- Click "Environment Variables...".
+- Under "User variables for <your-user>", click "New..." and add:
+  - Variable name: `JAVA_HOME`
+  - Variable value: `C:\Program Files\Java\jdk-21`
+- Select the `Path` variable, click "Edit...", and add a new entry:
+  - `%JAVA_HOME%\bin`
+- Save changes, close PowerShell, and open a new PowerShell window.
+- Verify with:
+  ```powershell
+  java --version
+  ```
+
+Example command-line approach for the current user:
+
+```powershell
+setx JAVA_HOME "C:\Program Files\Java\jdk-21"
+setx PATH "%PATH%;%JAVA_HOME%\bin"
+```
+
+Then close and reopen PowerShell and run:
+
+```powershell
+java --version
+```
+
+### 2. Install Maven
+
+1. Download Maven from https://maven.apache.org/download.cgi.
+2. Extract Maven to a folder such as `C:\Program Files\Apache\maven`.
+3. Add the Maven `bin` folder to your `Path`, for example:
+   ```text
+   C:\Program Files\Apache\maven\bin
+   ```
+4. Verify in PowerShell:
+   ```powershell
+   mvn -version
+   ```
+
+### 3. Optional: Install Visual Studio Code
+
+VS Code is useful for editing and running the project, but not required.
+
+## Setup on macOS
+
+### 1. Install Java 21
+
+1. Install Homebrew if it is not already installed:
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+2. Install OpenJDK 21:
+   ```bash
+   brew install openjdk@21
+   ```
+3. Add Java to your shell profile:
+   ```bash
+   echo 'export PATH="$(brew --prefix openjdk@21)/bin:$PATH"' >> ~/.zshrc
+   echo 'export JAVA_HOME="$(/usr/libexec/java_home -v21)"' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+4. Verify installation:
+   ```bash
+   java --version
+   ```
+
+If you use Bash instead of Zsh, add the same lines to `~/.bash_profile` or `~/.bashrc`.
+
+### 2. Install Maven
+
+1. Install Maven with Homebrew:
+   ```bash
+   brew install maven
+   ```
+2. Verify installation:
+   ```bash
+   mvn -version
+   ```
+
+### 3. Optional: Install Visual Studio Code
+
+VS Code is useful for editing and running the project, but not required.
 
 ## Run the backend
 
