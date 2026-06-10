@@ -33,18 +33,7 @@ The app includes an employee dashboard, search, add, delete, and an in-memory RE
 
 ## Project structure
 
-```
-project-root/
-├── frontend/
-│   ├── index.html
-│   ├── styles.css
-│   ├── script.js
-│   └── assets/
-└── backend/
-    ├── src/
-    ├── pom.xml
-    └── README.md
-```
+![Project_strcture](./images/ps.png)
 
 ## Setup on AWS Ubuntu EC2
 
