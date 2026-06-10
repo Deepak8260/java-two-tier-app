@@ -139,6 +139,41 @@ mvn spring-boot:run
 
 The backend will start on `http://localhost:8080`.
 
+#### Run in detached mode (background)
+
+To run the backend without blocking the terminal, use `nohup` and redirect output:
+
+```bash
+cd app/backend
+nohup mvn spring-boot:run > spring-boot.log 2>&1 &
+```
+
+This command:
+- `nohup` - keeps the process running even if you disconnect from SSH.
+- `> spring-boot.log` - redirects standard output to a file.
+- `2>&1` - redirects errors to the same log file.
+- `&` - puts the process in the background.
+
+View the logs:
+
+```bash
+tail -f app/backend/spring-boot.log
+```
+
+Stop the background process:
+
+```bash
+pkill -f "spring-boot:run"
+```
+
+Alternatively, build the JAR and run it:
+
+```bash
+cd app/backend
+mvn clean package
+nohup java -jar target/employee-directory-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
+```
+
 ### 6. Serve the frontend on Ubuntu
 
 #### Option A: Use Nginx (recommended)
