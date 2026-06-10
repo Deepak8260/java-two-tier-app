@@ -1,4 +1,6 @@
-const API_BASE = "http://localhost:8081/api/employees";
+const BACKEND_PORT = 8081;
+const apiHost = window.location.hostname || "localhost";
+const API_BASE = `http://${apiHost}:${BACKEND_PORT}/api/employees`;
 const searchInput = document.getElementById("searchInput");
 const searchButton = document.getElementById("searchButton");
 const employeeTableBody = document.getElementById("employeeTableBody");
