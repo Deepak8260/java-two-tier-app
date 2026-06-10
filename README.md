@@ -6,6 +6,21 @@ This repository contains a beginner-friendly two-tier application using:
 
 The app includes an employee dashboard, search, add, delete, and an in-memory REST API.
 
+## Table of Contents
+
+- [Project structure](#project-structure)
+- [Setup on AWS Ubuntu EC2](#setup-on-aws-ubuntu-ec2)
+- [Setup on a fresh Windows machine](#setup-on-a-fresh-windows-machine)
+- [Setup on macOS](#setup-on-macos)
+- [Run with Docker](#run-with-docker)
+- [Run the backend](#run-the-backend)
+- [Run the frontend](#run-the-frontend)
+- [API communication flow](#api-communication-flow)
+- [CORS and why it is needed](#cors-and-why-it-is-needed)
+- [Troubleshooting](#troubleshooting)
+- [Quick start checklist](#quick-start-checklist)
+- [Notes](#notes)
+
 ## Project structure
 
 ```
@@ -256,6 +271,101 @@ If you use Bash instead of Zsh, add the same lines to `~/.bash_profile` or `~/.b
 ### 3. Optional: Install Visual Studio Code
 
 VS Code is useful for editing and running the project, but not required.
+
+## Run with Docker
+
+Docker allows you to containerize and run the entire backend application without installing Java or Maven locally.
+
+### Dockerfile
+
+The project includes a multi-stage Dockerfile that builds and runs the Spring Boot application:
+
+```dockerfile
+# ==========================
+# Stage 1: Build Application
+# ==========================
+FROM maven:3.9.9-eclipse-temurin-21 AS build
+
+WORKDIR /app
+
+# Copy Maven configuration
+COPY backend/pom.xml .
+
+# Download dependencies first (better layer caching)
+RUN mvn dependency:go-offline
+
+# Copy source code
+COPY backend/src ./src
+
+# Build JAR
+RUN mvn clean package -DskipTests
+
+# ==========================
+# Stage 2: Run Application
+# ==========================
+FROM eclipse-temurin:21-jre-jammy
+
+WORKDIR /app
+
+# Copy JAR from build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Application port
+EXPOSE 8081
+
+# Start Spring Boot application
+ENTRYPOINT ["java","-jar","app.jar"]
+```
+
+### Build the Docker image
+
+From the project root directory, run:
+
+```bash
+docker build -t employee-directory:latest .
+```
+
+This command:
+- `-t employee-directory:latest` - Tags the image with a name and version
+- `.` - Builds from the Dockerfile in the current directory
+
+### Run the Docker container
+
+Once the image is built, start the container:
+
+```bash
+docker run -p 8081:8081 employee-directory:latest
+```
+
+This command:
+- `-p 8081:8081` - Maps port 8081 from the container to your local machine
+- `employee-directory:latest` - Runs the image we just built
+
+The backend will now be accessible at `http://localhost:8081`.
+
+### Screenshots after running Docker
+
+#### Default landing page when the application starts:
+
+[Insert screenshot of the default Team Management Dashboard here]
+
+The default page shows:
+- Team Management Dashboard title
+- Summary cards: Total Employees (4), Departments (4), Open Roles (5)
+- Search employee section
+- Add new employee form
+- Employee list table with sample data (Aarav Patel, Mia Thompson, Noah Kim, Leila Gonzalez)
+
+#### Page after entering employee data:
+
+[Insert screenshot of the dashboard after adding/interacting with employee data here]
+
+After adding employees or interacting with the app:
+- Updated counters reflect the new employee count
+- New employees appear in the employee list table
+- Search functionality filters employees by name
+- Delete buttons allow removing employees
+- Form fields clear after adding each employee
 
 ## Run the backend
 
