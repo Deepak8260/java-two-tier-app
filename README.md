@@ -355,7 +355,7 @@ The backend will now be accessible at `http://localhost:8081`.
 
 #### Default landing page when the application starts:
 
-[Insert screenshot of the default Team Management Dashboard here]
+![Default Team Management Dashboard](./images/default-landing-page.png)
 
 The default page shows:
 - Team Management Dashboard title
@@ -366,7 +366,7 @@ The default page shows:
 
 #### Page after entering employee data:
 
-[Insert screenshot of the dashboard after adding/interacting with employee data here]
+![Dashboard After Data Entry](./images/after-data-entry.png)
 
 After adding employees or interacting with the app:
 - Updated counters reflect the new employee count
