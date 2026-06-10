@@ -379,6 +379,19 @@ If the backend fails to start:
 - Ensure source files are in `src/main/java/com/example/employeedirectory`.
 - Run `mvn clean spring-boot:run` to see the full error.
 
+### Java annotations not found (jakarta vs javax)
+
+If you see `package javax.annotation does not exist`, the code is using the old namespace.
+
+Spring Boot 3.x uses Jakarta EE, not the old Java EE.
+
+Fix:
+- Change `import javax.annotation.PostConstruct` to `import jakarta.annotation.PostConstruct`.
+- Change `import javax.servlet` to `import jakarta.servlet`.
+- This applies to any annotation or class that used `javax` before.
+
+This is expected when upgrading to Java 21 and Spring Boot 3.x.
+
 ## Quick start checklist
 
 1. Open PowerShell in `backend`.

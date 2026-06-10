@@ -3,7 +3,7 @@ package com.example.employeedirectory.service;
 import com.example.employeedirectory.model.Employee;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
