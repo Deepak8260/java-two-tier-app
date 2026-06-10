@@ -1,0 +1,4 @@
+/home/ubuntu/java-two-tier-app/backend/src/main/java/com/example/employeedirectory/EmployeeDirectoryApplication.java
+/home/ubuntu/java-two-tier-app/backend/src/main/java/com/example/employeedirectory/controller/EmployeeController.java
+/home/ubuntu/java-two-tier-app/backend/src/main/java/com/example/employeedirectory/model/Employee.java
+/home/ubuntu/java-two-tier-app/backend/src/main/java/com/example/employeedirectory/service/EmployeeService.java
