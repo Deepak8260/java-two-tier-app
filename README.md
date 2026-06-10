@@ -8,6 +8,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yourusername/java-two-tier-app/pulls)
 [![Frontend](https://img.shields.io/badge/Frontend-Vanilla%20JS-F7DF1E.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
+![Banner](./images/Banner.png)
+
 This repository contains a beginner-friendly two-tier application using:
 - Frontend: HTML, CSS, Vanilla JavaScript
 - Backend: Java 21, Spring Boot 3.x, Maven
@@ -355,7 +357,7 @@ The backend will now be accessible at `http://localhost:8081`.
 
 #### Default landing page when the application starts:
 
-![Default Team Management Dashboard](./images/default-landing-page.png)
+![Default Team Management Dashboard](https://github.com/Deepak8260/java-two-tier-app/blob/main/images/image1.png)
 
 The default page shows:
 - Team Management Dashboard title
@@ -366,7 +368,7 @@ The default page shows:
 
 #### Page after entering employee data:
 
-![Dashboard After Data Entry](./images/after-data-entry.png)
+![Dashboard After Data Entry](./images/after.png)
 
 After adding employees or interacting with the app:
 - Updated counters reflect the new employee count
